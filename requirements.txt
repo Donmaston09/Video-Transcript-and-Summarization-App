@@ -1,5 +1,4 @@
 streamlit
-google.generativeai
+google-generativeai
 youtube_transcript_api
-speech_recognition 
-io
+SpeechRecognition
