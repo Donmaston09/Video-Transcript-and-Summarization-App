@@ -72,6 +72,10 @@ def main():
 
         **Note:** An API key is required to use this app.
     """)
+    st.markdown("""
+        **Created by:** Anthony Onoja  
+        **School of Health Science, University of Surrey**
+    """)
 
     # Instructions on how to get an API key
     st.sidebar.header("🔍 How to Get Your API Key")
