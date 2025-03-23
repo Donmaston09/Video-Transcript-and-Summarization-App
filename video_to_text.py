@@ -5,7 +5,7 @@ import speech_recognition as sr
 from io import BytesIO
 
 # Streamlit UI for API Key Input
-st.sidebar.header("🔑 Enter Your Google API Key")
+st.sidebar.header("🔑 Please Enter Your Google API Key to Use this App")
 GOOGLE_API_KEY = st.sidebar.text_input("Paste your API key here", type="password")
 
 if GOOGLE_API_KEY:
