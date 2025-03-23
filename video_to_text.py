@@ -21,8 +21,7 @@ def get_transcript(video_id):
     """Fetches the transcript of a YouTube video."""
     try:
         transcript = YouTubeTranscriptApi.get_transcript(video_id)
-        transcript_text = " ".join([t['text'] for t in transcript])
-        return transcript_text
+        return " ".join([t['text'] for t in transcript])
     except Exception as e:
         st.error(f"Error retrieving transcript: {e}")
         return None
@@ -46,8 +45,7 @@ def transcribe_audio_from_file(uploaded_file):
     with sr.AudioFile(audio_file) as source:
         audio = recognizer.record(source)
     try:
-        transcript = recognizer.recognize_google(audio)
-        return transcript
+        return recognizer.recognize_google(audio)
     except sr.UnknownValueError:
         st.error("Sorry, could not understand the audio.")
         return None
@@ -57,17 +55,18 @@ def transcribe_audio_from_file(uploaded_file):
 
 # Streamlit UI
 def main():
-    st.title("🎥 Video Transcript and Summarization App")
+    st.title("🎥 Video Summarization App")
+    
     st.markdown("""
         **Created by:** Anthony Onoja  
         **School of Health Science, University of Surrey**
     """)
-    # Brief about the app
+
     st.markdown("""
         ### 📜 About the App:
         This app extracts and summarizes transcripts from YouTube videos or uploaded video files.
         It uses **Google Gemini AI** for summarization and **YouTube Transcript API** or **speech recognition** for transcription.
-        
+
         **How it works:**
         1. **Enter a YouTube URL** to extract subtitles.
         2. **Upload a video file** to transcribe speech.
@@ -75,7 +74,6 @@ def main():
 
         **Note:** An API key is required to use this app.
     """)
-    
 
     # Instructions on how to get an API key
     st.sidebar.header("🔍 How to Get Your API Key")
@@ -93,13 +91,10 @@ def main():
 
         if video_url:
             video_id = video_url.split("v=")[-1].split("&")[0]  # Extracts only the video ID
-            st.write("⏳ Extracting transcript...")
+            st.write("⏳ Extracting transcript and generating summary...")
             transcript = get_transcript(video_id)
 
             if transcript:
-                st.success("✅ Transcript extracted successfully.")
-                st.write("**Transcript:**", transcript)
-                st.write("⏳ Summarizing transcript...")
                 summary = summarize_text(transcript)
                 st.subheader("📌 Summary:")
                 st.write(summary)
@@ -110,13 +105,10 @@ def main():
         uploaded_file = st.file_uploader("📂 Choose a video file", type=["mp4", "mkv", "avi", "mov"])
         
         if uploaded_file:
-            st.write("⏳ Transcribing audio from the video...")
+            st.write("⏳ Transcribing audio and generating summary...")
             transcript = transcribe_audio_from_file(uploaded_file)
             
             if transcript:
-                st.success("✅ Transcript extracted from video.")
-                st.write("**Transcript:**", transcript)
-                st.write("⏳ Summarizing transcript...")
                 summary = summarize_text(transcript)
                 st.subheader("📌 Summary:")
                 st.write(summary)
